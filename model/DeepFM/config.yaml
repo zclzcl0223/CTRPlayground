@@ -1,0 +1,18 @@
+# MODEL_CONFIG
+model_id: DeepFM
+n_embed: 16
+n_hidden: 1024
+activation: relu
+bias: False
+
+# TRAINING_CONFIG
+shuffle: True
+loss: bce
+metrics: [logloss, AUC]
+optimizer: adamW
+learning_rate: 1.0e-3
+batch_size: 8192
+embedding_weight_decay: 1.0e-5
+net_weight_decay: 0.0
+epochs: 10
+max_grad_norm: 1.0

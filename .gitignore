@@ -1,0 +1,6 @@
+**/__pycache__/
+
+dataset/cache/
+dataset/criteo/
+
+criteo.sh
