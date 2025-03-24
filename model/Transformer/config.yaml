@@ -1,12 +1,14 @@
 # MODEL_CONFIG
-model_id: DeepFM
+model_id: Transformer
 n_embed: 16
-n_hidden: 1024
+n_hidden: 64
+n_head: 4
+head_dim: 16
+n_layer: 2
 activation: relu
 bias: False
 
 # TRAINING_CONFIG
-shuffle: True
 loss: bce
 metrics: [logloss, AUC]
 optimizer: adamW

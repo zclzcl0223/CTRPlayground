@@ -12,6 +12,7 @@ class Trainer:
         self.model = model
         self.tokenizer = tokenizer
         self.config = config
+        self.decay_expand_rate = config.decay_expand_rate
         self.max_grad_norm = config.max_grad_norm
         self.device = device
         self.train_loader = train_loader
@@ -22,7 +23,7 @@ class Trainer:
         learning_rate = self.config.learning_rate
         epochs = self.config.epochs
         optimizer = get_optimizer(self.model, self.config)
-        scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda it: get_lr_lambda(it, 0, epochs * 1000, 
+        scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda it: get_lr_lambda(it, 0, epochs * self.decay_expand_rate, 
                                                                                                     learning_rate, learning_rate*0.1))
         bce_loss = nn.BCEWithLogitsLoss()
         train_loader = tqdm(self.train_loader, disable=False)
@@ -62,7 +63,7 @@ class Trainer:
                 with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                     y_hat = self.model(x)
                     loss = bce_loss(y_hat, y)
-            pred.extend(F.sigmoid(y_hat).cpu().detach().numpy())
+            pred.extend(F.sigmoid(y_hat.float()).cpu().detach().numpy())
             true.extend(y.cpu().detach().numpy())
             logloss_total.update(loss.item(), x.shape[0])
             iter_count += 1

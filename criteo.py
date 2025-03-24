@@ -11,6 +11,7 @@ from torch.utils.data import DataLoader
 from datasets import load_dataset, Dataset, DatasetDict
 from huggingface_hub import hf_hub_download
 from tqdm import tqdm
+from utils import load_config
 
 cache_dir = 'dataset/cache'
 os.makedirs(cache_dir, exist_ok=True)

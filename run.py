@@ -5,7 +5,7 @@ import json
 import torch
 import random
 import numpy as np
-from model import DeepFM
+from model import DeepFM, Transformer, MLPMixer
 from exp import Trainer
 from utils import load_config
 from criteo import Tokenizer
@@ -39,6 +39,8 @@ if __name__ == '__main__':
     model_id = eval(config.model_id)
     model = model_id(config, tokenizer.tokenizer).to(device)
     #model = torch.compile(model)
+    total_params = sum(p.numel() for p in model.parameters()) / 1e6
+    tqdm.write(f"Parameters: {total_params:.0f}M")
 
     # 5. train
     tqdm.write('***** start training *****')

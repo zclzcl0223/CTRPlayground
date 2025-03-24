@@ -1,12 +1,12 @@
 # MODEL_CONFIG
-model_id: DeepFM
+model_id: MLPMixer
 n_embed: 16
-n_hidden: 1024
+n_hidden: 128
+n_layer: 4
 activation: relu
 bias: False
 
 # TRAINING_CONFIG
-shuffle: True
 loss: bce
 metrics: [logloss, AUC]
 optimizer: adamW
